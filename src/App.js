@@ -1,10 +1,9 @@
-import Input from "./Components/Input/Input";
+import Todo from "./todo/Todo";
 
 function App() {
   return (
     <div className="App">
-      <Input value="value" />
-      hello world
+      <Todo />
     </div>
   );
 }
