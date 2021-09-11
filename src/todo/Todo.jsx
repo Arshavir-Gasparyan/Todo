@@ -65,6 +65,11 @@ export default function Todo() {
         <Input onChange={(el) => onHandleChange(el)} />
         <Button handleClick={() => onHandleClick()} text="click" />
       </div>
+      <div className={styles.todoNavigation}>
+        <Button text={`All:  ${list.length}`} />
+        <Button text="Active" />
+        <Button text="Completed" />
+      </div>
       <div className={styles.list}>
         {list
           ? list.map((el, i) => (
