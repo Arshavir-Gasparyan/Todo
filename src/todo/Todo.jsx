@@ -17,7 +17,10 @@ export default function Todo() {
 
   const onHandleClick = () => {
     setCount(count + 1);
-    setList([{ name: todoList, id: count, readOnly: true }, ...list]);
+    setList([
+      { name: todoList, id: count, readOnly: true, edited: false },
+      ...list,
+    ]);
     console.log("list", list);
   };
 
@@ -36,10 +39,21 @@ export default function Todo() {
   const onEditInput = (todoList) => {
     setList(
       list.map((todo) =>
-        todo.id === todoList.id ? { ...todo, readOnly: false } : todo
+        todo.id === todoList.id
+          ? { ...todo, readOnly: false, edited: true }
+          : todo
       )
     );
   };
+
+  const onSaveInput = (todoList) => {
+    setList(
+      list.map((todo) =>
+        todo.id === todoList.id ? { ...todo, readOnly: true } : todo
+      )
+    );
+  };
+
   console.log(list);
   console.log("inp", listInputValue);
 
@@ -58,10 +72,12 @@ export default function Todo() {
                 <List
                   onChange={(evt) => changeListInput(evt, el)}
                   onEdit={() => onEditInput(el)}
-                  value={el.name}
-                  edit="edit"
-                  delate="delate"
                   onDelate={() => delateInput(el.id)}
+                  onSave={() => onSaveInput(el)}
+                  edit="Edit"
+                  delate="Delate"
+                  save="Save"
+                  value={el.name}
                   readOnly={el.readOnly}
                 />
               </div>

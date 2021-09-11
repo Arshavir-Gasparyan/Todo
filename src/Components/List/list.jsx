@@ -9,11 +9,14 @@ export default function List({
   onEdit,
   onChange,
   readOnly,
+  save,
+  onSave,
 }) {
   return (
     <div>
       <Input readOnly={readOnly} value={value} onChange={onChange} />
       <Button text={edit} handleClick={onEdit} />
+      <Button text={save} handleClick={onSave} />
       <Button text={delate} handleClick={onDelate} />
     </div>
   );
