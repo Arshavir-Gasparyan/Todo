@@ -11,6 +11,8 @@ export default function List({
   readOnly,
   save,
   onSave,
+  done,
+  onActive,
 }) {
   return (
     <div>
@@ -18,6 +20,7 @@ export default function List({
       <Button text={edit} handleClick={onEdit} />
       <Button text={save} handleClick={onSave} />
       <Button text={delate} handleClick={onDelate} />
+      <Button text={done} handleClick={onActive} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Components/Input/Button/Button";
 import Input from "../Components/Input/Input";
 import List from "../Components/List/list";
@@ -9,20 +9,32 @@ export default function Todo() {
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [listInputValue, setListInputValue] = useState("");
+  const [todoMenu, setTodoMenu] = useState([]);
 
   const onHandleChange = (el) => {
-    // el.preventDefault();
     setTodoList(el.target.value);
   };
 
   const onHandleClick = () => {
     setCount(count + 1);
     setList([
-      { name: todoList, id: count, readOnly: true, edited: false },
+      {
+        name: todoList,
+        id: count,
+        readOnly: true,
+        edited: false,
+        isActive: true,
+      },
       ...list,
     ]);
+
     console.log("list", list);
   };
+
+  useEffect(() => {
+    localStorage.setItem("todo", JSON.stringify(list));
+    setTodoMenu(list);
+  }, [list]);
 
   const delateInput = (id) => {
     setList(list.filter((el) => id !== el.id));
@@ -54,8 +66,25 @@ export default function Todo() {
     );
   };
 
-  console.log(list);
-  console.log("inp", listInputValue);
+  const onActiveInput = (todoList) => {
+    setList(
+      list.map((todo) =>
+        todo.id === todoList.id ? { ...todo, isActive: false } : todo
+      )
+    );
+  };
+
+  const showAllInputs = () => {
+    setTodoMenu(list.map((todo) => todo));
+  };
+
+  const showActiveInputs = () => {
+    setTodoMenu(list.filter((todo) => todo.isActive === true));
+  };
+
+  const showCompletedInputs = () => {
+    setTodoMenu(list.filter((todo) => todo.isActive === false));
+  };
 
   return (
     <>
@@ -66,22 +95,27 @@ export default function Todo() {
         <Button handleClick={() => onHandleClick()} text="click" />
       </div>
       <div className={styles.todoNavigation}>
-        <Button text={`All:  ${list.length}`} />
-        <Button text="Active" />
-        <Button text="Completed" />
+        <Button
+          handleClick={() => showAllInputs()}
+          text={`All:  ${list.length}`}
+        />
+        <Button handleClick={() => showActiveInputs()} text="Active" />
+        <Button handleClick={() => showCompletedInputs()} text="Completed" />
       </div>
       <div className={styles.list}>
-        {list
-          ? list.map((el, i) => (
+        {todoMenu
+          ? todoMenu.map((el, i) => (
               <div className={styles.listRow} key={i}>
                 <List
                   onChange={(evt) => changeListInput(evt, el)}
                   onEdit={() => onEditInput(el)}
                   onDelate={() => delateInput(el.id)}
                   onSave={() => onSaveInput(el)}
+                  onActive={() => onActiveInput(el)}
                   edit="Edit"
                   delate="Delate"
                   save="Save"
+                  done="Done"
                   value={el.name}
                   readOnly={el.readOnly}
                 />
