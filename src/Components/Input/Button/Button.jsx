@@ -1,8 +1,8 @@
 import styles from "./Button.Module.css";
 
-export default function Button({ handleClick, text }) {
+export default function Button({ handleClick, text, style }) {
   return (
-    <button className={styles.button} onClick={handleClick}>
+    <button style={style} className={styles.button} onClick={handleClick}>
       {text}
     </button>
   );

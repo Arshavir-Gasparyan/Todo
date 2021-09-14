@@ -3,4 +3,8 @@
     font-size: 32px;
     color:black;
     vertical-align: middle;
+    color: black;
+    border-radius: 5px;
+    border:none;
+    color: white;
 }

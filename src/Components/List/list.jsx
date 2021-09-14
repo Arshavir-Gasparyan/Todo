@@ -10,15 +10,20 @@ export default function List({
   onChange,
   readOnly,
   save,
-  onSave,
+  style,
   done,
   onActive,
 }) {
   return (
     <div>
-      <Input readOnly={readOnly} value={value} onChange={onChange} />
+      <Input
+        style={style}
+        readOnly={readOnly}
+        value={value}
+        onChange={onChange}
+      />
       <Button text={edit} handleClick={onEdit} />
-      <Button text={save} handleClick={onSave} />
+      {/* <Button text={save} handleClick={onSave} /> */}
       <Button text={delate} handleClick={onDelate} />
       <Button text={done} handleClick={onActive} />
     </div>
